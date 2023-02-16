@@ -17,13 +17,8 @@ class PresentFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val presentViewModel =
-            ViewModelProvider(this).get(PresentViewModel::class.java)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        val presentViewModel = ViewModelProvider(this).get(PresentViewModel::class.java)
 
         _binding = FragmentPresentBinding.inflate(inflater, container, false)
         val root: View = binding.root
