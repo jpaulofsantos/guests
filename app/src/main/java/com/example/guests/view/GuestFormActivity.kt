@@ -1,4 +1,4 @@
-package com.example.guests
+package com.example.guests.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,7 +6,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.guests.R
 import com.example.guests.databinding.ActivityGuestFormBinding
+import com.example.guests.viewmodel.GuestsFormViewModel
 
 class GuestFormActivity : AppCompatActivity(), View.OnClickListener {
 

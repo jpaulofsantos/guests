@@ -1,12 +1,13 @@
-package com.example.guests
+package com.example.guests.viewmodel
 
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.guests.repository.GuestRepository
 
 class GuestsFormViewModel: ViewModel() {
 
+    private val repository = GuestRepository.getInstance()
     private val nameGuest = MutableLiveData<String>()
     private val isPresent = MutableLiveData<Boolean>()
 
