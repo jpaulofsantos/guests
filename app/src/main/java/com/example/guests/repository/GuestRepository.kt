@@ -65,4 +65,59 @@ class GuestRepository private constructor(context: Context){
             false
         }
     }
+
+    fun deleteData(guestId: Int): Boolean {
+
+        return try {
+            //comunicação com o BD
+            val db = getDataBase.writableDatabase
+
+            //selection será interpolada com o parametro args
+            val selection = DataBaseConstants.Guest.COLUMNS.ID + " = ?"
+            val args = arrayOf((guestId).toString())
+
+            db.delete(DataBaseConstants.Guest.TABLE_NAME, selection, args)
+            true
+
+        } catch (e: java.lang.Exception) {
+            false
+        }
+    }
+
+    fun selectData(): List<GuestModel> {
+        var listaGuest = mutableListOf<GuestModel>()
+
+        try {
+            val db = getDataBase.readableDatabase
+            val columns = arrayOf(
+                DataBaseConstants.Guest.COLUMNS.ID,
+                DataBaseConstants.Guest.COLUMNS.NAME,
+                DataBaseConstants.Guest.COLUMNS.PRESENCE
+            )
+
+            //método query retorna um cursor (aponta para o começo da tabela)
+            val cursor = db.query(DataBaseConstants.Guest.TABLE_NAME, columns, null, null,
+                null, null, null)
+
+            if (cursor != null && cursor.count > 0) {
+                while (cursor.moveToNext()) {
+
+                    //pegando o id atraves do cursor, indo ate a coluna ID
+                    val id = cursor.getInt(cursor.getColumnIndex(DataBaseConstants.Guest.COLUMNS.ID))
+                    val name = cursor.getString(cursor.getColumnIndex(DataBaseConstants.Guest.COLUMNS.NAME))
+                    val presence = cursor.getInt(cursor.getColumnIndex(DataBaseConstants.Guest.COLUMNS.PRESENCE))
+
+                    //presence true = 1 e false para outros valores
+                    val guest = GuestModel(id, name, presence == 1)
+                    //adicionando guest na lista
+                    listaGuest.add(guest)
+                }
+            }
+            cursor.close()
+
+        } catch (e: java.lang.Exception) {
+            return listaGuest
+        }
+        return listaGuest
+    }
 }

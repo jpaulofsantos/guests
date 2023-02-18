@@ -18,11 +18,9 @@ class GuestDataBase(context: Context): SQLiteOpenHelper(context, NAME, null, VER
                 DataBaseConstants.Guest.COLUMNS.ID + " integer primary key autoincrement, " +
                 DataBaseConstants.Guest.COLUMNS.NAME + " text, " +
                 DataBaseConstants.Guest.COLUMNS.PRESENCE + " integer);")
-
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         //verificação/atualização do banco
-
     }
 }

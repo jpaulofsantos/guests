@@ -1,6 +1,7 @@
 package com.example.guests.viewmodel
 
 import android.app.Application
+import android.content.Intent
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -20,5 +21,9 @@ class GuestsFormViewModel(application: Application) : AndroidViewModel(applicati
 
     fun update(guest: GuestModel) {
         repository.updateData(guest)
+    }
+
+    fun delete(guestId: Int) {
+        repository.deleteData(guestId)
     }
 }
