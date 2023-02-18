@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.guests.R
 import com.example.guests.databinding.ActivityGuestFormBinding
+import com.example.guests.model.GuestModel
 import com.example.guests.viewmodel.GuestsFormViewModel
 
 class GuestFormActivity : AppCompatActivity(), View.OnClickListener {
@@ -32,18 +33,13 @@ class GuestFormActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(view: View) {
         if (view.id == R.id.btn_save) {
             var nomeConvidado = binding.editName.text.toString()
-            guestsFormViewModel.getName(nomeConvidado)
+            var radioStatus = binding.radioPresent.isChecked
+
+            val model = GuestModel(0, nomeConvidado, radioStatus)
+            guestsFormViewModel.insert(model)
         }
     }
 
     fun setObserve() {
-        guestsFormViewModel.nameGuest().observe(this, Observer {
-            Toast.makeText(applicationContext, it, Toast.LENGTH_LONG).show()
-
-        })
-        guestsFormViewModel.isPresent().observe(this, Observer {
-
-        })
-
     }
 }

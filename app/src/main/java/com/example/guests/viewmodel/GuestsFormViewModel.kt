@@ -1,30 +1,20 @@
 package com.example.guests.viewmodel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.guests.model.GuestModel
 import com.example.guests.repository.GuestRepository
 
-class GuestsFormViewModel: ViewModel() {
+class GuestsFormViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val repository = GuestRepository.getInstance()
+    private val repository = GuestRepository.getInstance(application)
     private val nameGuest = MutableLiveData<String>()
     private val isPresent = MutableLiveData<Boolean>()
 
-    fun nameGuest(): LiveData<String> {
-        return nameGuest
+    fun insert(guest: GuestModel) {
+        repository.insertData(guest)
     }
-
-    fun isPresent(): LiveData<Boolean> {
-        return isPresent
-    }
-
-    fun getName(nome: String) {
-        nameGuest.value = nome
-    }
-
-    fun getRadioStatus(status: Boolean) {
-        isPresent.value = status
-    }
-
 }
