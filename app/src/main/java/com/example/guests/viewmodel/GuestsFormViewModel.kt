@@ -26,4 +26,16 @@ class GuestsFormViewModel(application: Application) : AndroidViewModel(applicati
     fun delete(guestId: Int) {
         repository.deleteData(guestId)
     }
+
+    fun selectAll() {
+        repository.selectAll()
+    }
+
+    fun selectPresent() {
+        repository.selectPresent()
+    }
+
+    fun selectAbsent() {
+        repository.selectAbsent()
+    }
 }
