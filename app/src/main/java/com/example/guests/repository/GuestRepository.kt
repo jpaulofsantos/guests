@@ -43,4 +43,26 @@ class GuestRepository private constructor(context: Context){
             false
         }
     }
+
+    fun updateData(guestModel: GuestModel): Boolean {
+
+        return try {
+            val db = getDataBase.writableDatabase
+            val presence = if (guestModel.presence) 1 else 0
+
+            val values = ContentValues()
+            values.put(DataBaseConstants.Guest.COLUMNS.NAME, guestModel.name)
+            values.put(DataBaseConstants.Guest.COLUMNS.PRESENCE, presence)
+
+            //selection será interpolada com o parametro args
+            val selection = DataBaseConstants.Guest.COLUMNS.ID + " = ?"
+            val args = arrayOf((guestModel.id).toString())
+
+            db.update(DataBaseConstants.Guest.TABLE_NAME, values, selection, args)
+            true
+
+        } catch (e: java.lang.Exception) {
+            false
+        }
+    }
 }

@@ -17,4 +17,8 @@ class GuestsFormViewModel(application: Application) : AndroidViewModel(applicati
     fun insert(guest: GuestModel) {
         repository.insertData(guest)
     }
+
+    fun update(guest: GuestModel) {
+        repository.updateData(guest)
+    }
 }
