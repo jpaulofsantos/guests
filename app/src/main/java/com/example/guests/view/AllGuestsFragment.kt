@@ -14,31 +14,38 @@ import com.example.guests.viewmodel.AllGuestsViewModel
 class AllGuestsFragment : Fragment() {
 
     private var _binding: FragmentAllGuestsBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+    private lateinit var allGuestsViewModel: AllGuestsViewModel
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val allGuestsViewModel =
-            ViewModelProvider(this).get(AllGuestsViewModel::class.java)
+        allGuestsViewModel = ViewModelProvider(this).get(AllGuestsViewModel::class.java)
 
         _binding = FragmentAllGuestsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textHome
-        allGuestsViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+        //fragment chamando a viewModel
+        allGuestsViewModel.selectAll()
+
+        observ()
+
         return root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun observ() {
+
+        allGuestsViewModel.listGuests.observe(viewLifecycleOwner) {
+            val string = ""
+
+        }
     }
 }
