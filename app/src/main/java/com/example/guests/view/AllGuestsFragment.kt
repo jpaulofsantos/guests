@@ -28,9 +28,6 @@ class AllGuestsFragment : Fragment() {
         allGuestsViewModel = ViewModelProvider(this).get(AllGuestsViewModel::class.java)
         _binding = FragmentAllGuestsBinding.inflate(inflater, container, false)
 
-        //fragment chamando a viewModel
-        allGuestsViewModel.selectAll()
-
         //layout recycler
         binding.recyclerAllGuests.layoutManager = LinearLayoutManager(context)
 
@@ -44,12 +41,15 @@ class AllGuestsFragment : Fragment() {
             }
 
             override fun onDelete(id: Int) {
-                TODO("Not yet implemented")
+                allGuestsViewModel.deleteGuest(id)
+                allGuestsViewModel.selectAll()
             }
-
         }
 
         adapter.getListener(listener)
+
+        //fragment chamando a viewModel
+        allGuestsViewModel.selectAll()
 
         observ()
 

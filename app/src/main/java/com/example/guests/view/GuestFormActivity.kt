@@ -1,5 +1,6 @@
 package com.example.guests.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -37,6 +38,9 @@ class GuestFormActivity : AppCompatActivity(), View.OnClickListener {
 
             val model = GuestModel(0, nomeConvidado, radioStatus)
             guestsFormViewModel.insert(model)
+            Toast.makeText(applicationContext, "Convidado $nomeConvidado cadastrado!", Toast.LENGTH_SHORT).show()
+            //after conclude guest insertion, go back to allGuestFragment, with updated guest list
+            startActivity(Intent(applicationContext, AllGuestsFragment::class.java))
         }
     }
 
