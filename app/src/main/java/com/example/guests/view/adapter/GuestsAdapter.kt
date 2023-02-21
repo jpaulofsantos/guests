@@ -5,11 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.guests.databinding.RowGuestBinding
 import com.example.guests.model.GuestModel
+import com.example.guests.view.listener.OnGuestListener
 import com.example.guests.view.viewholder.GuestViewHolder
 
 class GuestsAdapter: RecyclerView.Adapter<GuestViewHolder>() {
 
     private var guestList: List<GuestModel> = listOf()
+    private lateinit var listener: OnGuestListener
 
     //chamado na criação do layout de cada item
     //cria e chama a fun onBindViewHolder
@@ -17,7 +19,7 @@ class GuestsAdapter: RecyclerView.Adapter<GuestViewHolder>() {
 
         //inflando o layout row_guest que foi criado para manipular cada item do recycler
         val item = RowGuestBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return GuestViewHolder(item)
+        return GuestViewHolder(item, listener) //add listener
     }
 
     // atribuição dos valores no layout
@@ -30,7 +32,7 @@ class GuestsAdapter: RecyclerView.Adapter<GuestViewHolder>() {
         return guestList.count()
     }
 
-    //método que será utilizado em AllGuestsFramento, no observer da ViewModel que recebe a lista de convidados.
+    //método que será utilizado em AllGuestsFrament, no observer da ViewModel que recebe a lista de convidados.
     //recebe essa lista, joga o valor na variavel guestList que por sua vez é utilizada no método getItemCount
     fun updateGuests(list: List<GuestModel>) {
         guestList = list
@@ -38,4 +40,7 @@ class GuestsAdapter: RecyclerView.Adapter<GuestViewHolder>() {
         notifyDataSetChanged()
     }
 
+    fun getListener(listenerFrom: OnGuestListener) {
+        listener = listenerFrom
+    }
 }
