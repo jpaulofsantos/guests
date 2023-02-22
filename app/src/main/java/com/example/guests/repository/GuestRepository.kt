@@ -199,4 +199,43 @@ class GuestRepository private constructor(context: Context){
         }
         return listaGuest
     }
+
+    fun selectGuest(id: Int): GuestModel? {
+        var guest: GuestModel? = null
+
+        try {
+
+            val db = getDataBase.readableDatabase
+            val columns = arrayOf(
+                DataBaseConstants.Guest.COLUMNS.ID,
+                DataBaseConstants.Guest.COLUMNS.NAME,
+                DataBaseConstants.Guest.COLUMNS.PRESENCE
+            )
+            val selection = DataBaseConstants.Guest.COLUMNS.ID + " = ?"
+            val args = arrayOf(id.toString())
+
+            //método query retorna um cursor (aponta para o começo da tabela)
+            val cursor = db.query(DataBaseConstants.Guest.TABLE_NAME, columns, selection, args,
+                null, null, null)
+
+            if (cursor != null && cursor.count > 0) {
+                while (cursor.moveToNext()) {
+                    //pegando o id atraves do cursor, indo ate a coluna ID
+                    val id = cursor.getInt(cursor.getColumnIndex(DataBaseConstants.Guest.COLUMNS.ID))
+                    val name = cursor.getString(cursor.getColumnIndex(DataBaseConstants.Guest.COLUMNS.NAME))
+                    val presence = cursor.getInt(cursor.getColumnIndex(DataBaseConstants.Guest.COLUMNS.PRESENCE))
+
+                    //presence true = 1 e false para outros valores
+                    guest = GuestModel(id, name, presence == 1)
+                }
+            }
+            cursor.close()
+
+        } catch (e: java.lang.Exception) {
+            return guest
+        }
+        return guest
+    }
+
+
 }

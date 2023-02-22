@@ -12,15 +12,29 @@ import com.example.guests.repository.GuestRepository
 class GuestsFormViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository = GuestRepository.getInstance(application)
-    private val nameGuest = MutableLiveData<String>()
-    private val isPresent = MutableLiveData<Boolean>()
+
+    private val guestModel = MutableLiveData<GuestModel>()
+    val guest: LiveData<GuestModel> = guestModel
 
     fun insert(guest: GuestModel) {
         repository.insertData(guest)
     }
 
-    fun update(guest: GuestModel) {
+    fun getGuest(id: Int) {
+        guestModel.value = repository.selectGuest(id)
+    }
+
+    fun updateGuest(guest: GuestModel) {
         repository.updateData(guest)
+    }
+
+    //opção de usar apenas 1 metodo e a lógica fica na viewModel
+    fun save(guest: GuestModel) {
+        if (guest.id == 0) {
+            repository.insertData(guest)
+        } else {
+            repository.updateData(guest)
+        }
     }
 
     fun delete(guestId: Int) {
