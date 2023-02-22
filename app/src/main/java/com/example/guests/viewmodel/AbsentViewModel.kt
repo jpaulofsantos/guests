@@ -10,7 +10,7 @@ import com.example.guests.repository.GuestRepository
 
 class AbsentViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val repository: GuestRepository = GuestRepository.getInstance(application)
+    private val repository = GuestRepository(application.applicationContext)
 
     private val listAbsentGuests = MutableLiveData<List<GuestModel>>()
     val absentGuests: LiveData<List<GuestModel>> = listAbsentGuests
